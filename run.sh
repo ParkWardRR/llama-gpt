@@ -89,6 +89,17 @@ esac
 
 # Run docker compose with docker-compose-ggml.yml or docker-compose-gguf.yml
 
+
+# This script checks if CUDA is desired and the model type to decide 
+# which docker-compose file to use for launching Docker containers.
+# The variables "with_cuda" and "model_type" determine the required flow.
+# "with_cuda" = 1 signifies CUDA is needed, and any other value is considered as non-CUDA.
+# The "model_type" allows the choice between "ggml" and "gguf" models.
+# The original issue was misusing "docker compose" instead of "docker-compose".
+# Docker Compose is usually invoked as "docker-compose", although Docker has integrated Compose 
+# into the Docker CLI as "docker compose" from version 1.27.0 but still depends on the Docker CLI installed version.
+# The adjustment caters to the widely used older version, which prefers "docker-compose".
+
 if [ "$with_cuda" -eq 1 ]
 then
     if [ "$model_type" = "ggml" ]
